@@ -29,7 +29,7 @@ To make sure you can successfully run the latest versions of the example scripts
 ```bash
 git clone https://github.com/huggingface/transformers
 cd transformers
-pip install .
+pip install -e .
 ```
 Then cd in the example folder of your choice and run
 ```bash
@@ -118,7 +118,11 @@ python run_on_remote.py \
     --example pytorch/text-generation/run_generation.py \
     --model_type=gpt2 \
     --model_name_or_path=openai-community/gpt2 \
-    --prompt "I am a language model and"
+    --prompt "Write a concise follow-up email after a project kickoff meeting. Include: next steps, owners, and due dates.\n\nSubject: Kickoff recap\n\nHi team," \
+    --length 160 \
+    --temperature 0.8 \
+    --p 0.95 \
+    --seed 42
 
 # For byo (bring your own) cluster:
 python run_on_remote.py --host <cluster_ip> --user <ssh_user> --key_path <ssh_key_path> \

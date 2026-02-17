@@ -49,7 +49,7 @@ python run_qa.py \
   --num_train_epochs 2 \
   --max_seq_length 384 \
   --doc_stride 128 \
-  --output_dir /tmp/debug_squad/
+  --output_dir ./tmp/debug_squad/
 ```
 
 Training with the previously defined hyper-parameters yields the following results:
@@ -57,6 +57,25 @@ Training with the previously defined hyper-parameters yields the following resul
 ```bash
 f1 = 88.52
 exact_match = 81.22
+```
+
+If you just want to validate your setup quickly (smoke test), you can truncate the dataset splits to a small number of samples:
+
+```bash
+python run_qa.py \
+  --model_name_or_path google-bert/bert-base-uncased \
+  --dataset_name squad \
+  --do_train \
+  --do_eval \
+  --max_train_samples 200 \
+  --max_eval_samples 200 \
+  --per_device_train_batch_size 12 \
+  --learning_rate 3e-5 \
+  --num_train_epochs 1 \
+  --max_seq_length 384 \
+  --doc_stride 128 \
+  --output_dir ./tmp/debug_squad_smoke/ \
+  --overwrite_output_dir
 ```
 
 ### Fine-tuning XLNet with beam search on SQuAD
@@ -84,8 +103,6 @@ python run_qa_beam_search.py \
 #### Command for SQuAD2.0:
 
 ```bash
-export SQUAD_DIR=/path/to/SQUAD
-
 python run_qa_beam_search.py \
     --model_name_or_path xlnet/xlnet-large-cased \
     --dataset_name squad_v2 \
